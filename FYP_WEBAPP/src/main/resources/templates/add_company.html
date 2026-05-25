@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>CRA - Company Details</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            color: #333;
+        }
+        .lead {
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+        label {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .btn-shadow {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-shadow:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .invalid-feedback {
+            color: red;
+            font-size: 14px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/header2"></div>
+    <div class="container mt-5">
+        <h1 class="text-center">Key in the Company's Details</h1>
+        <p class="lead text-muted text-center">Please fill in the details below to assess the company's credit risk based on the financial data provided.</p>
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/companies/save}" th:object="${company}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="company_name" class="form-label">Company Name:</label>
+                            <input id="company_name" type="text" th:field="*{companyName}" class="form-control" required placeholder="e.g., ABC Corporation">
+                            <div class="invalid-feedback">Please enter a valid company name.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="company_industry" class="form-label">Industry:</label>
+                            <input id="company_industry" type="text" th:field="*{industry}" class="form-control" required placeholder="e.g., Technology">
+                            <div class="invalid-feedback">Please enter a valid industry.</div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="company_cash" class="form-label">Cash:</label>
+                            <input id="company_cash" type="number" th:field="*{cash}" class="form-control" required step="0.01" placeholder="e.g., 50000.00">
+                            <div class="invalid-feedback">Please enter a valid amount for cash.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ebit_rev" class="form-label">EBIT/Revenue:</label>
+                            <input id="ebit_rev" type="number" th:field="*{ebit_Rev}" class="form-control" required step="0.01" placeholder="e.g., 0.25">
+                            <div class="invalid-feedback">Please enter a valid EBIT/Revenue ratio.</div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="ebit_totalAsset" class="form-label">EBIT/Total Asset:</label>
+                            <input id="ebit_totalAsset" type="number" th:field="*{ebit_totalAsset}" class="form-control" required step="0.01" placeholder="e.g., 0.20">
+                            <div class="invalid-feedback">Please enter a valid EBIT/Total Asset ratio.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="employees" class="form-label">Employees:</label>
+                            <input id="employees" type="number" th:field="*{employees}" class="form-control" required placeholder="e.g., 100">
+                            <div class="invalid-feedback">Please enter a valid number of employees.</div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="grossProfit_Rev" class="form-label">Gross Profit/Revenue:</label>
+                            <input id="grossProfit_Rev" type="number" th:field="*{grossProfit_Rev}" class="form-control" required step="0.01" placeholder="e.g., 0.30">
+                            <div class="invalid-feedback">Please enter a valid Gross Profit/Revenue ratio.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="netCashFlow" class="form-label">Net Cash Flow:</label>
+                            <input id="netCashFlow" type="number" th:field="*{netCashFlow}" class="form-control" required step="0.01" placeholder="e.g., 30000.00">
+                            <div class="invalid-feedback">Please enter a valid Net Cash Flow.</div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="retainedEarnings" class="form-label">Retained Earnings:</label>
+                            <input id="retainedEarnings" type="number" th:field="*{retainedEarnings}" class="form-control" required step="0.01" placeholder="e.g., 10000.00">
+                            <div class="invalid-feedback">Please enter a valid amount for Retained Earnings.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="totalAsset_TotalLiabilities" class="form-label">Total Asset/Total Liabilities:</label>
+                            <input id="totalAsset_TotalLiabilities" type="number" th:field="*{totalAsset_TotalLiabilities}" class="form-control" required step="0.01" placeholder="e.g., 0.50">
+                            <div class="invalid-feedback">Please enter a valid Total Asset/Total Liabilities ratio.</div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="totalDebt_TotalAsset" class="form-label">Total Debt/Total Asset:</label>
+                            <input id="totalDebt_TotalAsset" type="number" th:field="*{totalDebt_TotalAsset}" class="form-control" required step="0.01" placeholder="e.g., 0.60">
+                            <div class="invalid-feedback">Please enter a valid Total Debt/Total Asset ratio.</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-shadow">Save Company</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer"></div>
+</body>
+</html>

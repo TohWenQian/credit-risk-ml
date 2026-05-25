@@ -1,0 +1,25 @@
+<!-- Zhi Ting -->
+<header style="background-color: #DADCDD; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 20px;">
+	<nav class="navbar navbar-expand-lg navbar-light" style="border-radius: 7px">
+		<div class="container" style= "font-weight:bold">
+		
+			<a class="navbar-brand" href="/"> <img src="/images/Logo.png" style="width: 77px"></a>
+			<div class="me-auto navbar-nav">
+				<a class="active nav-link" href="/ourservice" style= "font-family:'Times new roman'">Our Service</a>
+				<div sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class=" active nav-link" href="/members">Members</a>
+				</div>
+				<div sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="active nav-link" href="/copmanies">Companies</a>
+				</div>
+				<a class="active nav-link" href="/aboutus" style= "font-family:'Times new roman'">About Us</a>
+				<a class="active nav-link" href="/contactus" style= "font-family:'Times new roman'">Contact Us</a>
+				<a class="active nav-link" sec:authorize="!isAuthenticated()" href="/login" style= "font-family:'Times new roman'" >Log In</a>
+				<form sec:authorize="isAuthenticated()" method="post" th:action="@{/logout}">
+					<button class="btn btn-shadow active nav-link" type="submit">Log Out</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+</header>
+<br>

@@ -1,0 +1,40 @@
+<!-- Zhi Ting -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>CRA - Manage Companies</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+</head>
+<div th:replace="fragments/style2"></div>
+<body>
+	<div th:replace="fragments/header2"></div>
+	<div class="container" style="padding: 50px 0px 50px 0px;">
+		<h1>Manage Companies</h1>
+		<br>
+		<table class="table bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Industry</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="company : ${listCompanies}">
+					<td th:text="${company.id}"></td>
+					<td th:text="${company.companyName}"></td>
+					<td th:text="${company.industry}"></td>
+					<td>
+						<a class="btn btn-shadow" th:href="@{/companies/edit/{id}(id=${company.id})}">Edit</a>
+						<a class="btn btn-shadow" style="margin-left: 10px" th:href="@{/companies/delete/{id}(id=${company.id})}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/companies/add" class="btn btn-shadow">Add a new company</a>
+	</div>
+	<div th:replace="fragments/footer"></div>
+</body>
+</html>

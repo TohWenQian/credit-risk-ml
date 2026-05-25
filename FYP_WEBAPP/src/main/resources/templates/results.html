@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CRA - Company Credit Risk Report</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for readability */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px; /* Set max width for better readability */
+            margin: auto; /* Center the container */
+            padding: 30px; /* Add padding for comfort */
+            background-color: #ffffff; /* White background for the report */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        h1, h2 {
+            color: #343a40; /* Darker color for headings */
+            margin-bottom: 20px; /* Space below headings */
+        }
+        p {
+            color: #6c757d; /* Muted color for description text */
+            margin-bottom: 15px; /* Space below paragraphs */
+        }
+        .report-content {
+            display: flex; /* Flex layout for side-by-side content */
+            justify-content: space-between; /* Space between elements */
+        }
+        .report-left {
+            flex: 0 0 60%; /* Left section takes 60% width */
+            padding-right: 20px; /* Space between sections */
+        }
+        .report-right {
+            flex: 0 0 35%; /* Right section takes 35% width */
+        }
+        img {
+            width: 100%; /* Full width for images */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .disclaimer {
+            font-size: 14px; /* Smaller font for disclaimer */
+            color: #dc3545; /* Red color for emphasis */
+            margin-top: 30px; /* Space above disclaimer */
+        }
+        .btn-primary {
+            margin-top: 20px; /* Space above button */
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/header2"></div>
+    <div class="container">
+        <h1>Company Credit Risk Report</h1>
+        <div class="report-content">
+            <div class="report-left">
+                <h2>Analysis Results</h2>
+                <p th:text="'The risk category for the entered data is: ' + ${riskCategory}"></p>
+                <p>This report provides an assessment of the company's credit risk based on the financial data submitted. The analysis considers various financial metrics to determine the overall risk level.</p>
+                <p><strong>Key Findings:</strong></p>
+                <ul>
+                    <li th:text="'EBIT/Revenue Ratio: ' + ${ebitRevRatio}"></li>
+                    <li th:text="'Net Cash Flow: ' + ${netCashFlow}"></li>
+                    <li th:text="'Gross Profit/Revenue: ' + ${grossProfitRev}"></li>
+                </ul>
+                <p>The data used for this analysis is based on the most recent financial statements provided by the company. This assessment is intended to assist in understanding the company's financial health.</p>
+                
+                <h5>Disclaimer:</h5>
+                <p class="disclaimer">This report is for informational purposes only and should not be considered financial advice. The results are based on the data provided and the predictive model's algorithms. The accuracy of the predictions depends on the reliability of the data.</p>
+                
+                <a href="/data/add" class="btn btn-primary">Go Back</a>
+            </div>
+            <div class="report-right">
+                <h2>Credit Risk Chart</h2>
+                <img src="/images/results.png" alt="Credit Risk Chart">
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer"></div>
+</body>
+</html>

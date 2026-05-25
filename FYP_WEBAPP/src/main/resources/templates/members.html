@@ -1,0 +1,44 @@
+<!-- Zhi Ting -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<title>Durk & Friends - Manage Members</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+</head>
+<div th:replace="fragments/style2"></div>
+<body>
+	<div th:replace="fragments/header2"></div>
+	<div class="container" style="padding: 50px 0px 50px 0px;">
+		<h1>Manage Members</h1>
+		<br>
+			<table class="table bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Role</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="member : ${listMembers}">
+						<td th:text="${member.id}"></td>
+						<td th:text="${member.name}"></td>
+						<td th:text="${member.username}"></td>
+						<td th:text="${member.email}"></td>
+						<td th:text="${member.role}"></td>
+						<td>
+							<a th:href="@{/members/edit/{id}(id=${member.id})}" class="btn btn-shadow">Edit</a>
+							<a th:href="@{/members/delete/{id}(id=${member.id})}" class="btn btn-shadow" style="margin-left: 10px">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		<a href="/members/add" class="btn btn-shadow">Register a new member</a>
+	</div>
+	<div th:replace="fragments/footer"></div>
+</body>
+</html>
