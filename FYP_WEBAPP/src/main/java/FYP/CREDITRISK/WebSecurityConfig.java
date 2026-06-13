@@ -46,7 +46,7 @@ public class WebSecurityConfig {
 				// Public pages
 				.requestMatchers("/", "/ourservice", "/aboutus", "/contactus",
 								"/members/add", "/members/save",
-								"/images/*", "/bootstrap/**", "/videos/*")
+								"/images/**", "/bootstrap/**", "/css/**", "/videos/*")
 				.permitAll()
 				// Any logged-in user can access these
 				.anyRequest().authenticated())

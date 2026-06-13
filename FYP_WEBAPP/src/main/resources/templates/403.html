@@ -1,20 +1,26 @@
-<!-- Zhi Ting -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>CRA - !</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/js/bootstrap.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Access Denied</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
-<div th:replace="fragments/style1"></div>
 <body>
-	<div class="right">
-		<div th:replace="fragments/header1"></div>
-		<div class="content">
-			<h2>You are NOT authorized to access this page!</h2>
-		</div>
-	</div>
-	<div th:replace="fragments/footer"></div>
+
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="error-page">
+    <div class="error-box">
+        <div class="error-code">403</div>
+        <div class="error-title">Access Denied</div>
+        <p class="error-msg">You do not have permission to view this page. If you believe this is a mistake, please contact your system administrator.</p>
+        <a th:href="@{/}" class="btn btn-primary btn-lg">Return to Home</a>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

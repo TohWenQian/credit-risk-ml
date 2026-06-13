@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Assessment History</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="page-wrapper">
+
+    <div class="page-header">
+        <div>
+            <h1 class="page-title" th:text="${company.companyName} + ' — Assessment History'">Assessment History</h1>
+            <div class="page-subtitle-text">
+                <span style="background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:100px;padding:.15rem .6rem;font-size:.75rem;font-weight:600;"
+                      th:text="${company.industry}"></span>
+                &nbsp;
+                <span th:text="${#lists.size(predictions)} + ' assessment(s) on record'"></span>
+            </div>
+        </div>
+        <a th:href="@{/companies}" class="btn btn-secondary">Back to Companies</a>
+    </div>
+
+    <!-- Empty state -->
+    <div th:if="${#lists.isEmpty(predictions)}" class="data-card" style="text-align:center;padding:3rem;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">📋</div>
+        <div style="font-weight:600;color:#334155;margin-bottom:.5rem;">No assessments yet</div>
+        <div style="color:#94A3B8;font-size:.9rem;margin-bottom:1.5rem;">
+            Run a new assessment on this company to start tracking its credit risk history.
+        </div>
+        <a th:href="@{/companies/add}" class="btn btn-primary">Run New Assessment</a>
+    </div>
+
+    <!-- History table -->
+    <div th:unless="${#lists.isEmpty(predictions)}" class="data-card">
+        <div class="data-card-head">
+            <span>Credit Risk Assessments</span>
+            <span style="font-size:.78rem;color:#94A3B8;font-weight:400;"
+                  th:text="${#lists.size(predictions)} + ' total'"></span>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="cra-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date &amp; Time</th>
+                        <th>Risk Rating</th>
+                        <th>Assessed By</th>
+                        <th>LIME Analysis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pred, stat : ${predictions}">
+                        <td style="color:#94A3B8;font-size:.8rem;" th:text="${stat.count}"></td>
+                        <td style="font-size:.85rem;"
+                            th:text="${#temporals.format(pred.createdAt, 'dd MMM yyyy, HH:mm')}"></td>
+                        <td>
+                            <span class="risk-badge"
+                                  th:classappend="${pred.predictedClass.toLowerCase().contains('high') or pred.predictedClass.toLowerCase().contains('default')} ? ' risk-high' : ' risk-low'"
+                                  th:text="${pred.predictedClass}">
+                            </span>
+                        </td>
+                        <td style="font-size:.85rem;color:#475569;" th:text="${pred.assessedBy}"></td>
+                        <td>
+                            <button th:if="${pred.limeImageBase64 != null}"
+                                    class="btn btn-secondary btn-tbl"
+                                    data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#lime-modal-' + ${pred.id}">
+                                View Chart
+                            </button>
+                            <span th:unless="${pred.limeImageBase64 != null}"
+                                  style="color:#94A3B8;font-size:.8rem;">N/A</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- LIME modals -->
+<div th:each="pred : ${predictions}" th:if="${pred.limeImageBase64 != null}">
+    <div class="modal fade" th:id="'lime-modal-' + ${pred.id}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="background:#0D1B2A;border:1px solid rgba(255,255,255,.1)">
+                <div class="modal-header" style="border-bottom:1px solid rgba(255,255,255,.1)">
+                    <div>
+                        <h5 class="modal-title" style="color:#F8FAFC;font-weight:700;">LIME Explanation</h5>
+                        <div style="font-size:.78rem;color:#94A3B8;margin-top:.15rem"
+                             th:text="'Assessed ' + ${#temporals.format(pred.createdAt, 'dd MMM yyyy, HH:mm')} + ' by ' + ${pred.assessedBy}"></div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding:1.5rem;text-align:center">
+                    <p style="color:#94A3B8;font-size:.83rem;margin-bottom:1rem;line-height:1.6;">
+                        Feature importance chart — which financial metrics most influenced the
+                        <strong style="color:#F8FAFC" th:text="${pred.predictedClass}"></strong> rating.
+                    </p>
+                    <img th:src="'data:image/png;base64,' + ${pred.limeImageBase64}"
+                         alt="LIME Feature Importance"
+                         style="max-width:100%;border-radius:8px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

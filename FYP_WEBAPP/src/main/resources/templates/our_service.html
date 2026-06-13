@@ -1,75 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>CRA - Our Service</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <script src="/bootstrap/js/bootstrap.js"></script>
-    <style>
-        .floating-image {
-            width: 100%;
-            max-width: 400px; /* Adjust the width as necessary */
-            border-radius: 5px; /* Optional: adds rounded corners */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Optional: adds a shadow */
-            transition: transform 0.2s; /* Animation for hover effect */
-        }
-
-        .contents {
-            text-align: center;
-            padding: 40px 20px; /* Padding to prevent overlapping */
-        }
-
-        /* Heading and text styling */
-        .contents h1 {
-            font-family: 'Times New Roman';
-            font-size: 50px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .contents h2 {
-            font-family: 'Times New Roman';
-            font-size: 29px;
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .contents p {
-            font-family: 'Times New Roman', 'Arial Narrow', Arial, sans-serif;
-            font-size: 20px;
-            padding: 20px;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto 30px auto; /* Center align and spacing */
-        }
-
-        /* Button styling */
-        .btn-shadow {
-            font-size: 22px;
-            padding: 10px 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Our Service</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 <body>
-    <div th:replace="fragments/header2"></div>
-    <div class="container">
-        <div class="contents">
-            <!-- Title and subtitle -->
-            <h1>Credit Risk Analysis</h1>
-            <h2>Empower Your Business with Machine Learning</h2>
 
-            <!-- Image with floating effect -->
-            <img src="/images/credit_analysis.png" class="floating-image" alt="Credit Risk Analysis Image">
+<div th:replace="~{fragments/header2 :: header}"></div>
 
-            <!-- Paragraph text -->
-            <p>
-                At CRA, we understand the importance of credit risk analysis in lending, especially for small and medium enterprises (SMEs). That's why we use machine learning to streamline and reduce the costs of this process, making it easier for SMEs to access financing. Our goal is to build a model that can swiftly evaluate the creditworthiness of SMEs, enabling them to grow and thrive.
-            </p>
-
-            <!-- Analyse button -->
-            <a href="/companies/add" class="btn btn-shadow btn-primary">Analyse</a>
+<div class="service-hero">
+    <div class="service-hero-inner">
+        <div class="hero-pill">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FBBF24"/></svg>
+            XGBoost + LIME
+        </div>
+        <h1>Credit Risk Analysis</h1>
+        <p>Empower your lending decisions with AI. Enter a company's key financial metrics and receive an instant, explainable credit risk rating.</p>
+        <a th:href="@{/companies/add}" class="btn btn-primary btn-lg">Start Assessment</a>
+        <div class="service-img-wrap">
+            <img th:src="@{/images/credit_analysis.png}" alt="Credit Risk Analysis">
         </div>
     </div>
-    <div th:replace="fragments/footer"></div>
+</div>
+
+<div class="page-content-area">
+    <div class="content-card">
+        <div class="content-card-title">How It Works</div>
+        <p>Submit the company's financial data — including cash position, EBIT ratios, net cash flow, debt levels, and employee count. Our XGBoost model analyses these inputs against patterns learned from thousands of real SME cases to assign a risk class. LIME then explains the top contributing factors in a visual chart, giving you full transparency into the decision.</p>
+    </div>
+    <div class="content-card">
+        <div class="content-card-title">What You Get</div>
+        <p>Each assessment produces a risk classification (e.g. Low, High, Very High, Default) and a LIME feature-importance chart showing which financial metrics drove the result. Assessments are saved per company, so you can track changes in creditworthiness over time and build an audit trail.</p>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

@@ -1,26 +1,19 @@
-<!-- Zhi Ting -->
-<header style="background-color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 20px;">
-	<nav class="navbar navbar-expand-lg navbar-light" style="border-radius: 7px">
-		<div class="container">
-			<a class="navbar-brand" href="/"> <img src="/images/Logo.png" style="width: 77px"></a>
-			<div class="me-auto navbar-nav" >
-				<a class="active nav-link" href="/ourservice" style="color: white;">Our Service</a>
-				<div sec:authorize="hasRole('ROLE_ADMIN')">
-					<a class="active nav-link" href="/members" style="color: white;">Members</a>
-				</div>
-				<div sec:authorize="hasRole('ROLE_ADMIN')">
-					<a class="active nav-link" href="/companies" style="color: white;">Companies</a>
-				</div>
-				<a class="active nav-link" href="/aboutus" style="color: white;">About Us</a>
-				<a class="active nav-link" href="/contactus" style="color: white;">Contact Us</a>
-				<a class="active nav-link" sec:authorize="!isAuthenticated()" href="/login">Log In</a>
-			
-				<form method="post" sec:authorize="isAuthenticated()" th:action="@{/logout}">
-    <a class="active nav-link" href="javascript:void(0);" onclick="this.closest('form').submit()" style="color: white;">Log Out</a>
-</form>
-
-			</div>
-		</div>
-	</nav>
-</header>
-
+<nav class="cra-navbar" th:fragment="header">
+    <a class="nav-brand" th:href="@{/}">
+        <img th:src="@{/images/Logo.png}" alt="CRA">
+        <span class="nav-brand-text">CRA</span>
+    </a>
+    <ul class="nav-links">
+        <li><a th:href="@{/ourservice}">Our Service</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/members}">Members</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/companies}">Companies</a></li>
+        <li><a th:href="@{/aboutus}">About Us</a></li>
+        <li><a th:href="@{/contactus}">Contact Us</a></li>
+        <li sec:authorize="!isAuthenticated()"><a class="nav-btn-cta" th:href="@{/login}">Log In</a></li>
+        <li sec:authorize="isAuthenticated()">
+            <form method="post" th:action="@{/logout}" style="margin:0">
+                <button type="submit" class="nav-btn-logout">Log Out</button>
+            </form>
+        </li>
+    </ul>
+</nav>

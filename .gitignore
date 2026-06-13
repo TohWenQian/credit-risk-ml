@@ -1,1 +1,56 @@
-*.log 
+### Maven ###
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Eclipse / STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+.metadata/
+
+### IntelliJ ###
+.idea/
+*.iml
+*.ipr
+*.iws
+
+### VS Code ###
+.vscode/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### Python ###
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+### JDK ###
+.jdk/
+
+### Logs ###
+*.log
+logs/
+
+### GitHub Modernize ###
+.github/modernize/
+
+### Local configs ###
+application.properties
+
+### OS ###
+.DS_Store
+Thumbs.db
+FYP_WEBAPP/src/main/resources/application.properties
+FYP_WEBAPP/src/main/resources/application.properties

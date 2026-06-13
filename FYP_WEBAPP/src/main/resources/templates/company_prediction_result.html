@@ -1,96 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>CRA - Company Credit Risk Report</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <script src="/bootstrap/js/bootstrap.js"></script>
-    <style>
-        body {
-            font-family: 'Calibri';
-            margin: 0; /* Remove default margin */
-        }
-
-        .report-container {
-            max-width: 900px; /* Set max width for better readability */
-            margin: auto; /* Center the container */
-            margin-top:50px;
-            padding: 30px; /* Add padding for comfort */
-            background-color: #ffffff; /* White background for the report */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 36px;
-            font-weight: bold;
-        }
-        
-        h2 {
-            margin-top: 20px; /* Space above h2 */
-            color: #343a40; /* Darker color for headings */
-        }
-
-        p {
-            color: #6c757d; /* Muted color for description text */
-            margin-bottom: 15px; /* Space below paragraphs */
-        }
-
-        .report-content {
-            display: flex; /* Flex layout for side-by-side content */
-            justify-content: space-between; /* Space between elements */
-        }
-
-        .report-left {
-            flex: 0 0 60%; /* Left section takes 60% width */
-            padding-right: 20px; /* Space between sections */
-        }
-
-        .report-right {
-            flex: 0 0 35%; /* Right section takes 35% width */
-        }
-
-        .explanation-img {
-            max-width: 100%; /* Full width for images */
-            height: auto; /* Maintain aspect ratio */
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 5px;
-        }
-
-        .disclaimer {
-            font-size: 14px; /* Smaller font for disclaimer */
-            color: #dc3545; /* Red color for emphasis */
-            margin-top: 30px; /* Space above disclaimer */
-        }
-
-        .btn-primary {
-            margin-top: 20px; /* Space above button */
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Credit Risk Report</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 <body>
 
-    <div class="report-container">
-        <h1>Company Credit Risk Report</h1>
-        <div class="report-content">
-            <div class="report-left">
-                <h2>Analysis Results</h2>
-                <p><strong>Company Name:</strong> <span th:text="${company.companyName}"></span></p>
-                <p><strong>Industry:</strong> <span th:text="${company.industry}"></span></p>
-                <p><strong>Predicted Credit Risk for the company:</strong> <span th:text="${prediction}" style="color:red;"></span></p>
-                
-                <h5>Disclaimer:</h5>
-                <p class="disclaimer">This report is for informational purposes only and should not be considered financial advice. The results are based on the data provided and the predictive model's algorithms. The accuracy of the predictions depends on the reliability of the data.</p>
-                
-                <a href="/ourservice" class="btn btn-primary">Back to Services</a>            </div>
-            <div class="report-right">
-                <h2>LIME Explanation</h2>
-                <p>This chart provides insights into the features that influenced the predicted credit risk. Each bar represents a feature's contribution, allowing you to see which financial metrics played a significant role in determining the risk assessment.</p>
-                <img th:src="${limeImage}" alt="LIME Explanation" style="max-width:100%;">        </div>
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="report-wrapper">
+    <div class="report-inner">
+
+        <!-- Report banner -->
+        <div class="report-banner">
+            <div>
+                <h1>Credit Risk Report</h1>
+                <div class="report-meta" th:text="${company.companyName} + ' — ' + ${company.industry}"></div>
+            </div>
+            <span class="risk-badge"
+                  th:classappend="${prediction != null and (prediction.toLowerCase().contains('high') or prediction.toLowerCase().contains('default'))} ? ' risk-high' : ' risk-low'"
+                  th:text="${prediction}">
+            </span>
+        </div>
+
+        <div class="report-grid">
+
+            <!-- Left: company details -->
+            <div>
+                <div class="report-card">
+                    <div class="report-card-head">Analysis Results</div>
+                    <div class="report-card-body">
+                        <div class="report-row">
+                            <span class="report-row-label">Company</span>
+                            <span class="report-row-value" th:text="${company.companyName}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">Industry</span>
+                            <span class="report-row-value" th:text="${company.industry}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">EBIT / Revenue</span>
+                            <span class="report-row-value" th:text="${company.ebit_Rev}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">EBIT / Total Asset</span>
+                            <span class="report-row-value" th:text="${company.ebit_totalAsset}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">Gross Profit / Revenue</span>
+                            <span class="report-row-value" th:text="${company.grossProfit_Rev}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">Net Cash Flow</span>
+                            <span class="report-row-value" th:text="${company.netCashFlow}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">Total Debt / Total Asset</span>
+                            <span class="report-row-value" th:text="${company.totalDebt_TotalAsset}"></span>
+                        </div>
+                        <div class="report-row">
+                            <span class="report-row-label">Employees</span>
+                            <span class="report-row-value" th:text="${company.employees}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-disclaimer">
+                    <strong>Disclaimer</strong>
+                    This report is for informational purposes only and does not constitute financial advice. Predictions are based on the data provided and the model's algorithms. Always consult a qualified financial professional before making lending decisions.
+                </div>
+
+                <div style="margin-top:1.25rem;display:flex;gap:.75rem">
+                    <a th:href="@{/ourservice}" class="btn btn-primary">Run Another Assessment</a>
+                    <a th:href="@{/companies}" class="btn btn-secondary">View All Companies</a>
+                </div>
+            </div>
+
+            <!-- Right: LIME chart -->
+            <div>
+                <div class="report-card" th:if="${limeImage != null}">
+                    <div class="report-card-head">LIME Explanation</div>
+                    <div class="report-card-body">
+                        <p style="font-size:.82rem;color:#64748B;margin-bottom:1rem;line-height:1.6;">
+                            This chart shows which financial metrics had the most influence on the predicted risk rating. Positive bars push the rating higher; negative bars lower it.
+                        </p>
+                        <img th:src="${limeImage}" alt="LIME Feature Importance" class="report-lime-img">
+                    </div>
+                </div>
+                <div class="report-card" th:unless="${limeImage != null}">
+                    <div class="report-card-head">LIME Explanation</div>
+                    <div class="report-card-body" style="text-align:center;padding:2rem;color:#94A3B8;">
+                        LIME chart not available for this assessment.
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

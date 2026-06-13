@@ -1,32 +1,39 @@
-<!-- Zhi Ting -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>CRA - About Us</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/js/bootstrap.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; About Us</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
-<div th:replace="fragments/style1"></div>
 <body>
-	<div class="right">
-		<div th:replace="fragments/header1"></div>
-		<div class="content">
-			<a style="font-family: times new roman; font-size: 50px;">About Our
-				Mission</a> <br> <a
-				style="font-family: 'times new roman'; font-size: 29px;">CRA
-				aims to use machine learning, a type of technology that learns from
-				data, to streamline and reduce the costs of this process for SMEs.
-				We aim to build a model that can swiftly evaluate the
-				creditworthiness of SMEs, enabling easier access to financing for
-				them.</a> <br> <a
-				style="font-family: 'times new roman'; font-size: 19px;">At
-				CRA, we are committed to leveraging the power of machine learning to
-				drive financial inclusion and empower small and medium enterprises.
-				Our goal is to make financial assessment more efficient and
-				accessible, ultimately fostering economic growth and development.</a>
-		</div>
-	</div>
-	<div th:replace="fragments/footer"></div>
+
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <h1>About Our Mission</h1>
+        <p>Leveraging machine learning to drive financial inclusion and empower small and medium enterprises through transparent, data-driven credit risk analysis.</p>
+    </div>
+</div>
+
+<div class="page-content-area">
+    <div class="content-card">
+        <div class="content-card-title">Who We Are</div>
+        <p>CRA was built to transform how SME creditworthiness is assessed. We use machine learning — a type of technology that learns from historical financial data — to streamline and significantly reduce the cost of credit evaluation. Our goal is to enable faster, fairer, and more accessible financing for small and medium enterprises.</p>
+    </div>
+    <div class="content-card">
+        <div class="content-card-title">Our Vision</div>
+        <p>We are committed to leveraging the power of AI to drive financial inclusion. By making credit assessment more efficient and transparent, we help lenders make better decisions and businesses secure the capital they need to grow. We believe financial opportunity should be driven by data, not limited by manual, costly processes.</p>
+    </div>
+    <div class="content-card">
+        <div class="content-card-title">Our Technology</div>
+        <p>Our system uses XGBoost — an industry-leading gradient boosting algorithm — to produce accurate, multi-class credit risk predictions from key financial ratios. We pair this with LIME (Local Interpretable Model-agnostic Explanations) to generate per-assessment feature-importance charts, so every rating comes with a clear, human-readable explanation of the factors that influenced it.</p>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

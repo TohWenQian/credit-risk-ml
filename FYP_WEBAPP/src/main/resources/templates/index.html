@@ -1,257 +1,127 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 <head>
 <meta charset="UTF-8">
-<title>CRA - Home</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/js/bootstrap.js"></script>
-<style>
-/* Basic reset and typography */
-body, html {
-	margin: 0;
-	padding: 0;
-	font-family: 'Arial', sans-serif;
-	color: #333;
-	background-color: #000; /* Set entire page background to black */
-	overflow-x: hidden;
-	scroll-behavior: smooth;
-}
-
-/* Main container for vertical stacking */
-.page-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	padding: 20px;
-}
-
-/* Section styling */
-.section {
-	width: 100%;
-	max-width: auto;
-	padding: 60px 20px;
-	margin: 20px 0;
-	background-color: #fff; /* Set section background to white */
-	color: #000; /* Set text color in sections to black */
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
-	text-align: center;
-	transition: transform 0.3s ease;
-}
-
-.section:hover {
-	transform: translateY(-5px);
-}
-
-/* Center the video */
-.video-container {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	padding: 20px 0;
-}
-
-/* Video styling for centered alignment and 50% width */
-.video-container video {
-	width: 100%;
-	height: auto;
-}
-
-/* Header and paragraph styling */
-h1 {
-	font-size: 36px;
-	color: #000; /* Set header color to black for sections */
-	font-family: 'Georgia', serif;
-	margin-bottom: 20px;
-}
-
-p {
-	font-size: 18px;
-	line-height: 1.8;
-	color: #333; /* Set paragraph color to a dark grey for contrast */
-}
-
-/* Footer styling */
-.footer {
-	font-size: 14px;
-	color: #888;
-	text-align: center;
-	margin-top: 40px;
-}
-
-/* Styling the login container */
-.login-container {
-	padding: 40px;
-	border-radius: 8px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-	max-width: 70%;
-	width: 100%;
-	color:white;
-	text-align: center;
-	margin: 40px auto; /* Centering on the page */
-	font-family:'times new roman';
-}
-
-/* Login title */
-.login-container h2 {
-	font-size: 28px;
-	color: white;
-	margin-bottom: 20px;
-}
-
-/* Form label and input styling */
-.login-container .form-label {
-	color: white;
-	font-weight: bold;
-}
-
-.login-container .form-control {
-	border-radius: 5px;
-	padding: 10px;
-	font-size: 16px;
-}
-
-/* Login button styling */
-.login-container .btn-login {
-	background-color: #007bff;
-	color: white;
-	padding: 10px 20px;
-	font-size: 18px;
-	font-weight: bold;
-	border: none;
-	border-radius: 5px;
-	width: 100%;
-	transition: background-color 0.3s ease;
-}
-
-.login-container .btn-login:hover {
-margin:20px;
-	background-color: #0056b3;
-}
-
-/* Link styling */
-.login-container a {
-	color: white;
-	text-decoration: none;
-}
-
-.login-container a:hover {
-	text-decoration: underline;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Credit Risk Analysis</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 <body>
 
-	<div th:replace="fragments/header2"></div>
+<div th:replace="~{fragments/header2 :: header}"></div>
 
-	<div class="page-container">
-
-		<!-- Section 1 -->
-		<div class="section">
-			<h1>Welcome</h1>
-			<p>At CRA, we are committed to leveraging the power of machine
-				learning to drive financial inclusion and empower small and medium
-				enterprises. Our goal is to make financial assessment more efficient
-				and accessible, ultimately fostering economic growth and
-				development.</p>
-		</div>
-
-		<!-- Video Section -->
-		<div class="video-container">
-			<video autoplay loop muted>
-				<source src="/videos/creditrisk.mp4" type="video/mp4">
-				Your browser does not support the video tag or the video file cannot
-				be loaded.
-			</video>
-		</div>
-
-		<!-- Additional sections if needed -->
-		<div class="section">
-			<h1>Our Mission</h1>
-			<p>Our mission is to transform financial analysis by integrating
-				AI-driven insights, supporting businesses in making informed
-				decisions.</p>
-		</div>
-
- <!-- Login Form Section -->
-    <div class="login-container">
-        <form th:action="@{/login}" method="post">
-            <h1 style=color:white;>Log In</h1>
-            <!-- Error and Success Messages -->
-            <div class="alert alert-danger" th:if="${param.error}">
-                Invalid username or password.
-            </div>
-            <div class="alert alert-success" th:if="${param.logout}">
-                You have been logged out.
-            </div>
-            <!-- Username Input -->
-            <div class="mb-3">
-                <label class="form-label" for="username">Username</label>
-                <input class="form-control" id="username" name="username" type="text" required />
-            </div>
-            <!-- Password Input -->
-            <div class="mb-3">
-                <label class="form-label" for="password">Password</label>
-                <input class="form-control" id="password" name="password" type="password" required />
-            </div>
-            <!-- Login Button -->
-            <div class="mt-3">
-                <button class="btn btn-login" type="submit">Log in</button>
-            </div>
-        </form>
-        <!-- Sign-up Link -->
-        <div class="mt-3">
-            Not a member yet? Sign Up <a href="/members/add">here</a>!
+<!-- Hero -->
+<section class="hero-section">
+    <div class="hero-inner">
+        <div class="hero-pill">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FBBF24"/></svg>
+            AI-Powered Credit Intelligence
+        </div>
+        <h1>Credit Risk Analysis<br>for <span class="hero-accent">SMEs</span></h1>
+        <p>Leverage machine learning and explainable AI to evaluate creditworthiness instantly. Make informed lending decisions backed by data, not guesswork.</p>
+        <div class="hero-ctas">
+            <a th:href="@{/ourservice}" class="btn btn-primary btn-lg">Start Analysis</a>
+            <a th:href="@{/aboutus}" class="btn btn-ghost btn-lg">Learn More</a>
         </div>
     </div>
+</section>
 
-<!-- Footer Section -->
-<footer class="footer">
-    <div class="footer-content">
-        <p>&copy; 2024 CRA. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="/aboutus">About Us</a>
-            <a href="/ourservice">Services</a>
-            <a href="/contactus">Contact Us</a>
-            <a href="/privacy">Privacy Policy</a>
+<!-- Stats -->
+<section class="stats-section">
+    <div class="stats-inner">
+        <div>
+            <div class="stat-value">XGBoost</div>
+            <div class="stat-label">ML Engine</div>
+        </div>
+        <div>
+            <div class="stat-value">LIME</div>
+            <div class="stat-label">Explainable AI</div>
+        </div>
+        <div>
+            <div class="stat-value">5-Class</div>
+            <div class="stat-label">Risk Rating</div>
+        </div>
+        <div>
+            <div class="stat-value">SME</div>
+            <div class="stat-label">Focused</div>
         </div>
     </div>
-</footer>
+</section>
 
-<style>
-    /* Footer styling */
-    .footer {
-            color: white;
-    
-        padding: 20px;
-        text-align: center;
-        margin-top: 40px;
-    }
+<!-- Features -->
+<section class="features-section">
+    <div class="features-header">
+        <span class="section-label">Platform Capabilities</span>
+        <h2>Everything you need for credit assessment</h2>
+        <p>A complete toolkit for evaluating, tracking, and understanding SME credit risk.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+            <h3>ML Risk Scoring</h3>
+            <p>XGBoost model trained on real financial data delivers accurate multi-class credit risk predictions in seconds.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <h3>Explainable AI</h3>
+            <p>LIME generates visual feature-importance charts so you understand exactly why each risk rating was assigned.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3>Assessment History</h3>
+            <p>Track every credit assessment per company over time. Compare ratings and monitor financial health trends.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3>Role-Based Access</h3>
+            <p>Admin and user roles ensure the right people have the right level of access to sensitive financial data.</p>
+        </div>
+    </div>
+</section>
 
-    .footer-content p {
-        margin: 0;
-                color: white;
-        
-        font-size: 14px;
-    }
+<!-- Login -->
+<section class="login-section">
+    <div class="login-section-inner">
+        <div class="login-section-header">
+            <h2>Sign in to your account</h2>
+            <p>Access your credit risk dashboard</p>
+        </div>
+        <div class="login-box">
+            <form th:action="@{/login}" method="post">
+                <div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
+                <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-control" id="username" name="username" type="text"
+                           required autocomplete="username" placeholder="Enter your username">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" id="password" name="password" type="password"
+                           required autocomplete="current-password" placeholder="Enter your password">
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-primary btn-full btn-lg" type="submit">Log In</button>
+                </div>
+            </form>
+            <div class="login-footer-text">
+                Not a member yet? <a th:href="@{/members/add}">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    /* Footer links */
-    .footer-links {
-        margin-top: 10px;
-    }
-
-    .footer-links a {
-        color: #white;
-        margin: 0 10px;
-        text-decoration: none;
-        font-size: 14px;
-    }
-
-    .footer-links a:hover {
-        text-decoration: underline;
-    }
-</style>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

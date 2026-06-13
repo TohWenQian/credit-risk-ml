@@ -1,75 +1,13 @@
-<!-- Zhi Ting -->
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 100vh;
-    font-family: 'Times New Roman';
-}
+<th:block th:fragment="left-panel">
+    <div class="split-left">
+        <div class="panel-logo">
+            <a th:href="@{/}">
+                <img th:src="@{/images/CRA.png}" alt="CRA Logo">
+            </a>
+        </div>
 
-.left {
-    align-items: center;
-    background-color: black;
-    display: flex;
-    flex-direction: column; /* Change to column for vertical stacking */
-    flex: 1;
-    height: 100%;
-    justify-content: center; /* Center items vertically */
-}
-
-.right {
-    background-color: #DADCDD;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    height: 100%;
-}
-
-.content {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 70px;
-    padding-right: 70px;
-}
-
-.navbar-nav a.nav-link:hover {
-    color: white;
-}
-
-.navbar-nav a.nav-link {
-    color: #9575CD;
-}
-
-button, .btn {
-	background-color: #0080FF;
-	border-color: #0080FF;
-    border-radius: 20px;
-    color: white;
-    width:200px;
-    font-family: 'times new roman';
-    font-weight: bold;
-}
-
-button:hover, .btn:hover {
-    background-color: 'blue';
-    border-color: 'blue';
-}
-
-.btn-shadow:focus {
-    box-shadow: 0 0 12px #aa85fa;
-}
-</style>
-
-<body>
-    <div class="left">
-       
-        <a href="/">
-            <img src="/images/CRA.png" style="width: 400px;">
-        </a>
-        
-
+        <div class="panel-tagline">
+            Credit Risk Analysis
+        </div>
     </div>
-</body>
+</th:block>

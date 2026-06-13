@@ -1,44 +1,76 @@
-<!-- Zhi Ting -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Durk & Friends - Manage Members</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/css/bootstrap.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Manage Members</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
-<div th:replace="fragments/style2"></div>
 <body>
-	<div th:replace="fragments/header2"></div>
-	<div class="container" style="padding: 50px 0px 50px 0px;">
-		<h1>Manage Members</h1>
-		<br>
-			<table class="table bordered">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Role</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="member : ${listMembers}">
-						<td th:text="${member.id}"></td>
-						<td th:text="${member.name}"></td>
-						<td th:text="${member.username}"></td>
-						<td th:text="${member.email}"></td>
-						<td th:text="${member.role}"></td>
-						<td>
-							<a th:href="@{/members/edit/{id}(id=${member.id})}" class="btn btn-shadow">Edit</a>
-							<a th:href="@{/members/delete/{id}(id=${member.id})}" class="btn btn-shadow" style="margin-left: 10px">Delete</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		<a href="/members/add" class="btn btn-shadow">Register a new member</a>
-	</div>
-	<div th:replace="fragments/footer"></div>
+
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="page-wrapper">
+
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Members</h1>
+            <div class="page-subtitle-text">Manage system users and their access roles</div>
+        </div>
+        <a th:href="@{/members/add}" class="btn btn-primary">+ Add Member</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="data-card">
+        <div class="data-card-head">
+            <span>User Accounts</span>
+            <span style="font-size:.78rem;color:#94A3B8;font-weight:400;"
+                  th:text="${#lists.size(listMembers)} + ' total'"></span>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="cra-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="member : ${listMembers}">
+                        <td style="color:#94A3B8;font-size:.8rem;" th:text="${member.id}"></td>
+                        <td style="font-weight:600;" th:text="${member.name}"></td>
+                        <td th:text="${member.username}"></td>
+                        <td th:text="${member.email}"></td>
+                        <td>
+                            <span style="display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:100px;font-size:.72rem;font-weight:700;"
+                                  th:style="${member.role == 'ROLE_ADMIN'} ? 'background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE' : 'background:#F1F5F9;color:#475569;border:1px solid #E2E8F0'"
+                                  th:text="${member.role}">
+                            </span>
+                        </td>
+                        <td>
+                            <a th:href="@{/members/edit/{id}(id=${member.id})}" class="btn btn-primary btn-tbl">Edit</a>
+                            <a th:href="@{/members/delete/{id}(id=${member.id})}" class="btn btn-danger btn-tbl"
+                               style="margin-left:.35rem">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(listMembers)}">
+                        <td colspan="6" style="text-align:center;padding:3rem;color:#94A3B8;">No members found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

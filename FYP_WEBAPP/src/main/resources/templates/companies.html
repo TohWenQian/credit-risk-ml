@@ -1,40 +1,82 @@
-<!-- Zhi Ting -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>CRA - Manage Companies</title>
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<script src="/bootstrap/js/bootstrap.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRA &mdash; Manage Companies</title>
+<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
-<div th:replace="fragments/style2"></div>
 <body>
-	<div th:replace="fragments/header2"></div>
-	<div class="container" style="padding: 50px 0px 50px 0px;">
-		<h1>Manage Companies</h1>
-		<br>
-		<table class="table bordered">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Industry</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="company : ${listCompanies}">
-					<td th:text="${company.id}"></td>
-					<td th:text="${company.companyName}"></td>
-					<td th:text="${company.industry}"></td>
-					<td>
-						<a class="btn btn-shadow" th:href="@{/companies/edit/{id}(id=${company.id})}">Edit</a>
-						<a class="btn btn-shadow" style="margin-left: 10px" th:href="@{/companies/delete/{id}(id=${company.id})}">Delete</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="/companies/add" class="btn btn-shadow">Add a new company</a>
-	</div>
-	<div th:replace="fragments/footer"></div>
+
+<div th:replace="~{fragments/header2 :: header}"></div>
+
+<div class="page-wrapper">
+
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Companies</h1>
+            <div class="page-subtitle-text">Manage registered companies and run credit risk assessments</div>
+        </div>
+        <a th:href="@{/companies/add}" class="btn btn-primary">+ New Assessment</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="data-card">
+        <div class="data-card-head">
+            <span>Company Registry</span>
+            <span style="font-size:.78rem;color:#94A3B8;font-weight:400;"
+                  th:text="${#lists.size(listCompanies)} + ' total'"></span>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="cra-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>Industry</th>
+                        <th>Latest Risk Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="company : ${listCompanies}">
+                        <td style="color:#94A3B8;font-size:.8rem;" th:text="${company.id}"></td>
+                        <td style="font-weight:600;" th:text="${company.companyName}"></td>
+                        <td th:text="${company.industry}"></td>
+                        <td>
+                            <span th:if="${latestPredictions != null and latestPredictions[company.id] != null}"
+                                  class="risk-badge"
+                                  th:classappend="${latestPredictions[company.id].toLowerCase().contains('high') or latestPredictions[company.id].toLowerCase().contains('default')} ? ' risk-high' : ' risk-low'"
+                                  th:text="${latestPredictions[company.id]}">
+                            </span>
+                            <span th:unless="${latestPredictions != null and latestPredictions[company.id] != null}"
+                                  style="color:#94A3B8;font-size:.8rem;">Not assessed</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary btn-tbl"
+                               th:href="@{/companies/{id}/history(id=${company.id})}">History</a>
+                            <a class="btn btn-primary btn-tbl" style="margin-left:.35rem"
+                               th:href="@{/companies/edit/{id}(id=${company.id})}">Edit</a>
+                            <a class="btn btn-danger btn-tbl" style="margin-left:.35rem"
+                               th:href="@{/companies/delete/{id}(id=${company.id})}">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(listCompanies)}">
+                        <td colspan="5" style="text-align:center;padding:3rem;color:#94A3B8;">
+                            No companies registered yet. <a th:href="@{/companies/add}">Add the first one</a>.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>
